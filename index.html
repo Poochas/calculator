@@ -14,35 +14,29 @@
 
 <body>
   <div class="frame">
-    <div class="screen">
-      <div id="answer">20</div>
-      <div id="input">5+5</div>
+    <div id="screen">
+      0
     </div>
     <div class="buttons">
-      <button class="clear">C</button>
-      <button class="clear">AC</button>
-      <button id="%">%</button>
-      <button>&#247</button>
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
-      <button>x</button>
-
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button>-</button>
-
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-      <button>+</button>
-
-      <button>0</button>
-      <button>,</button>
-      <button id="digit0">=</button>
-
-
+      <button data-key="Delete" class="clear" id="clear">C</button>
+      <button data-key="Backspace" class="clear" id="delete">AC</button>
+      <button data-key="negative" class="operator" id="negative">+/-</button>
+      <button data-key="NumpadDivide" class="operator">&#247</button>
+      <button data-key="Numpad7" class="digit">7</button>
+      <button data-key="Numpad8" class="digit">8</button>
+      <button data-key="Numpad9" class="digit">9</button>
+      <button data-key="NumpadMultiply" class="operator">x</button>
+      <button data-key="Numpad4" class="digit">4</button>
+      <button data-key="Numpad5" class="digit">5</button>
+      <button data-key="Numpad6" class="digit">6</button>
+      <button data-key="NumpadSubtract" class="operator">-</button>
+      <button data-key="Numpad1" class="digit">1</button>
+      <button data-key="Numpad2" class="digit">2</button>
+      <button data-key="Numpad3" class="digit">3</button>
+      <button data-key="NumpadAdd" class="operator">+</button>
+      <button data-key="Numpad0" class="digit">0</button>
+      <button data-key="NumpadDecimal" class="digit">.</button>
+      <button data-key="NumpadEnter" class="operator" id="calc">=</button>
     </div>
   </div>
 </body>
