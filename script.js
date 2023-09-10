@@ -1,9 +1,15 @@
 const buttons = document.querySelectorAll('button');
 const screen = document.getElementById('screen');
-let inputNumber = null
-let operator = null
-let answerNumber = null
+const decimal = document.querySelector('[data-key="NumpadDecimal');
+
+let secondNumber = null
+let firstOperator = null
+let firstNumber = null
+let secondOperator = null
 let newNumber = true
+let dashCounter = 0
+
+let checkDecimal = () => screen.innerText.split('.').length - 1 < '1'
 
 function input(e) {
     if (e != null) {
@@ -14,16 +20,22 @@ function input(e) {
         if (e.getAttribute('data-key') == 'Backspace') {
             if (screen.innerText.length == 1) { screen.innerText = 0 }
             else { screen.innerText = screen.innerText.slice(0, -1) }
-            inputNumber = screen.innerText
         }
-        if (e.getAttribute('data-key') == 'Delete') { screen.innerText = '0'; inputNumber = null; answerNumber = null; operator = null; newNumber = true };
+        if (e.getAttribute('data-key') == 'Delete') {
+            reset()
+            screen.innerText = '0';
+        }
         if (e.classList == 'digit') {
-            updateInput(e.innerText)
-        };
+            if (e.getAttribute('data-key') == 'NumpadDecimal') {
+                if (checkDecimal()) { updateInput(e.innerText) }
+            } else { updateInput(e.innerText) }
+        }
         if (e.classList == 'operator') {
-            operator = e.innerText == '=' ? operator : e.innerText;
-            operate(operator)
-        };
+            if (firstOperator == null) { firstOperator = e.innerText }
+            else { secondOperator = e.innerText }
+            assignNumber()
+            operate(e)
+        }
         clickedButton(e);
         setTimeout(clickedButton, 100, e);
     }
@@ -35,7 +47,6 @@ buttons.forEach((button) => {
     button.addEventListener('click', (e) => {
         input(e.currentTarget)
     })
-    button.addEventListener('keydown', keyboard)
 })
 function keyboard(e) {
     input(document.querySelector(`[data-key=${e.code}]`))
@@ -45,44 +56,58 @@ function clickedButton(button) {
     button.classList.toggle('clicked')
 }
 
+
+//     if (screen.innerText.split('.').length - 1 == '1') { decimal.disabled = 'true' }
+//     else { decimal.disabled = 'false' }
+// }
 function updateInput(e) {
-    if (newNumber) { screen.innerText = e; newNumber = false; console.log(e) }
+    if (newNumber) {
+        if (e == '.') { screen.innerText = '0.' }
+        else { screen.innerText = e; }
+        newNumber = false
+    }
     else {
         screen.insertAdjacentText('beforeend', e)
     }
 }
 
+function assignNumber() {
+    if (firstOperator != null && secondOperator == null) { firstNumber = screen.innerText }
+    else { secondNumber = screen.innerText }
+}
+function reset() {
+    secondNumber = null;
+    firstNumber = null;
+    firstOperator = null;
+    secondOperator = null;
+    newNumber = true
+}
+
 function operate(e) {
-    if (answerNumber == null) { answerNumber = screen.innerText }
-    else { inputNumber = screen.innerText }
-    if (inputNumber != null && e != '+/-') {
-        switch (operator) {
+    if (secondNumber != null && e != '+/-') {
+        switch (firstOperator) {
             case '+':
-                answerNumber = parseFloat(answerNumber) + parseFloat(inputNumber);
-                screen.innerText = answerNumber;
+                firstNumber = parseFloat(firstNumber) + parseFloat(secondNumber);
+                screen.innerText = firstNumber;
                 break;
             case '-':
-                answerNumber = parseFloat(answerNumber) - parseFloat(inputNumber);
-                screen.innerText = answerNumber;
+                firstNumber = parseFloat(firstNumber) - parseFloat(secondNumber);
+                screen.innerText = firstNumber;
                 break;
             case 'x':
-                answerNumber = parseFloat(answerNumber) * parseFloat(inputNumber);
-                screen.innerText = answerNumber;
+                firstNumber = parseFloat(firstNumber) * parseFloat(secondNumber);
+                screen.innerText = firstNumber;
                 break;
             case '÷':
-                answerNumber = parseFloat(answerNumber) / parseFloat(inputNumber);
-                screen.innerText = answerNumber;
-                break;
-            case '%':
-                answerNumber = parseFloat(answerNumber) / parseFloat(inputNumber);
-                screen.innerText = answerNumber;
+                if (secondNumber == '0') { screen.innerText = 'Joking ?!'; reset() }
+                else { firstNumber = parseFloat(firstNumber) / parseFloat(secondNumber); }
                 break;
             default:
-                screen.innerText = answerNumber
+                screen.innerText = firstNumber
                 break;
         }
+        secondNumber = null;
     }
-    newNumber = true
-    inputNumber = null
-    operator = e
+    if (secondOperator != null) { firstOperator = secondOperator; secondOperator = null }
+    newNumber = true;
 }
