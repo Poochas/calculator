@@ -57,9 +57,7 @@ function clickedButton(button) {
 }
 
 
-//     if (screen.innerText.split('.').length - 1 == '1') { decimal.disabled = 'true' }
-//     else { decimal.disabled = 'false' }
-// }
+
 function updateInput(e) {
     if (newNumber) {
         if (e == '.') { screen.innerText = '0.' }
@@ -67,6 +65,7 @@ function updateInput(e) {
         newNumber = false
     }
     else {
+        if (screen.innerText.length == 10) { screen.innerText = screen.innerText.slice(1) }
         screen.insertAdjacentText('beforeend', e)
     }
 }
@@ -88,19 +87,22 @@ function operate(e) {
         switch (firstOperator) {
             case '+':
                 firstNumber = parseFloat(firstNumber) + parseFloat(secondNumber);
-                screen.innerText = firstNumber;
+                screen.innerText = Math.round(firstNumber * 1000) / 1000;
                 break;
             case '-':
                 firstNumber = parseFloat(firstNumber) - parseFloat(secondNumber);
-                screen.innerText = firstNumber;
+                screen.innerText = Math.round(firstNumber * 1000) / 1000;
                 break;
             case 'x':
                 firstNumber = parseFloat(firstNumber) * parseFloat(secondNumber);
-                screen.innerText = firstNumber;
+                screen.innerText = Math.round(firstNumber * 1000) / 1000;
                 break;
             case '÷':
                 if (secondNumber == '0') { screen.innerText = 'Joking ?!'; reset() }
-                else { firstNumber = parseFloat(firstNumber) / parseFloat(secondNumber); }
+                else {
+                    firstNumber = parseFloat(firstNumber) / parseFloat(secondNumber);
+                    screen.innerText = Math.round(firstNumber * 1000) / 1000;
+                }
                 break;
             default:
                 screen.innerText = firstNumber
