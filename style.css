@@ -1,3 +1,7 @@
+body {
+  display: flex;
+  justify-content: center;
+}
 .frame {
   display: flex;
   flex-direction: column;
@@ -13,7 +17,7 @@
   text-align: end;
   font-weight: 500;
   color: rgb(46, 46, 46);
-  background-color: beige;
+  background-color: rgb(245, 245, 220);
   margin: 1rem;
   border-radius: 5pt;
   flex: 2;
@@ -26,7 +30,8 @@
   border-radius: 25pt;
 }
 .buttons > .clear {
-  background-color: chocolate;
+  background-color: #d2691e;
+  aspect-ratio: 1.6;
 }
 .buttons {
   display: flex;
@@ -43,7 +48,7 @@
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   text-align: center;
-  color: azure;
+  color: rgb(240, 255, 255);
   font-weight: 500;
   background-color: rgba(122, 122, 122, 0.3);
   padding: 0;
