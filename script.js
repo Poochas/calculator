@@ -12,12 +12,7 @@ let dashCounter = 0
 let checkDecimal = () => screen.innerText.split('.').length - 1 < '1'
 
 function input(e) {
-    console.log(e)
     if (e != null) {
-        // if (e.getAttribute('data-key') == 'negative') {
-        //     newNumber = true;
-        //     updateInput(parseFloat(screen.innerText) * -1);
-        // }
         if (e.getAttribute('data-key') == 'Backspace') {
             if (screen.innerText.length == 1) { screen.innerText = 0 }
             else { screen.innerText = screen.innerText.slice(0, -1) }
@@ -32,10 +27,8 @@ function input(e) {
             } else { updateInput(e.innerText) }
         }
         if (e.classList == 'operator') {
-            // if (e.id != 'negative') {
             if (firstOperator == null) { firstOperator = e.innerText }
             else { secondOperator = e.innerText }
-            // }
             assignNumber()
             operate(e)
         }
